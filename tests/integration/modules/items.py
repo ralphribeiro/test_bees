@@ -1,6 +1,4 @@
-from random import choice, random
-from string import ascii_letters
-
+from helpers.fakes import make_random_str, make_randon_float
 
 RESPONSE_FIELDS = (
     'id',
@@ -38,18 +36,6 @@ def is_valid_items(items: list[dict]) -> bool:
     return all(is_valid_item(item) for item in items)
 
 
-def make_random_str(length: int) -> str:
-    """Make a random string
-
-    Args:
-        length (int): string length
-
-    Returns:
-        str: random string
-    """
-    return ''.join(choice(ascii_letters) for _ in range(length))
-
-
 def make_a_valid_item() -> dict:
     """Make a valid item
 
@@ -58,7 +44,34 @@ def make_a_valid_item() -> dict:
     """
     return {
         'name': make_random_str(20),
-        'height': random(),
-        'width': random(),
-        'weight': random()
+        'height': make_randon_float(),
+        'width': make_randon_float(),
+        'weight': make_randon_float()
     }
+
+
+def make_a_invalid_item() -> dict:
+    """Make a invalid item
+
+    Returns:
+        dict: invalid item
+    """
+    return {
+        'name': make_randon_float(),
+        'height': make_random_str(20),
+        'width': make_random_str(20),
+        'weight': make_random_str(20)
+    }
+
+
+def check_if_changed_values(expected: dict, returned: dict) -> bool:
+    """Check if item has updated
+
+    Args:
+        expected (dict): expected item values
+        returned (dict): returned item
+
+    Returns:
+        bool: has changed
+    """
+    return all(returned[key] == str(value) for key, value in expected.items())

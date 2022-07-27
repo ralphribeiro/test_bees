@@ -12,3 +12,49 @@ Feature: Items
     And a valid item
     When make a request to post a valid item
     Then the status_code is "201"
+    And a valid item is returned
+
+  Scenario: Get item by id
+    Given the test-bees url
+    And a valid item
+    When make a request to post a valid item
+    Then the status_code is "201"
+    And a valid item is returned
+    When save the item id
+    And make a request to get item by id
+    Then the status_code is "200"
+    And a valid item is returned
+
+  Scenario: Update item with patch
+    Given the test-bees url
+    And a valid item
+    When make a request to post a valid item
+    Then the status_code is "201"
+    And a valid item is returned
+    When save the item id
+    And make request to update a item values with "patch"
+    Then the status_code is "200"
+    And a valid item is returned
+    And values are changed
+
+  Scenario: Update item with put
+    Given the test-bees url
+    And a valid item
+    When make a request to post a valid item
+    Then the status_code is "201"
+    And a valid item is returned
+    When save the item id
+    And make request to update a item values with "put"
+    Then the status_code is "200"
+    And a valid item is returned
+    And values are changed
+
+  Scenario: Delete item
+    Given the test-bees url
+    And a valid item
+    When make a request to post a valid item
+    Then the status_code is "201"
+    And a valid item is returned
+    When save the item id
+    And make request to delete a item by id
+    Then the status_code is "204"
