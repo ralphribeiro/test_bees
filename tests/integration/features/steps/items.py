@@ -39,10 +39,7 @@ def make_invalid_item(context):
 @step('make a request to post a valid item')
 def post_item(context):
     url = context.root_url + 'items.json'
-    headers = {
-        'accept': '*/*',
-        'Content-Type': 'application/json'
-    }
+    headers = {'Content-Type': 'application/json'}
     context.response = requests.post(
         url, headers=headers, data=json.dumps(context.item)
     )
@@ -75,10 +72,7 @@ def update_item(context, mode):
     }
     old_item_id = context.item_id
     new_item = make_a_valid_item()
-    headers = {
-        'accept': '*/*',
-        'Content-Type': 'application/json'
-    }
+    headers = {'Content-Type': 'application/json'}
     url = f'{context.root_url}items/{old_item_id}.json'
     context.response = modes[mode](
         url, headers=headers, data=json.dumps(new_item)

@@ -11,8 +11,10 @@ Feature: Items
     Given the test-bees url
     And a valid item
     When make a request to post a valid item
+    And save the item id
     Then the status_code is "201"
     And a valid item is returned
+    And make request to delete a item by id
 
   Scenario: Get item by id
     Given the test-bees url
@@ -24,6 +26,7 @@ Feature: Items
     And make a request to get item by id
     Then the status_code is "200"
     And a valid item is returned
+    And make request to delete a item by id
 
   Scenario: Update item with patch
     Given the test-bees url
@@ -33,9 +36,11 @@ Feature: Items
     And a valid item is returned
     When save the item id
     And make request to update a item values with "patch"
+    And save the item id
     Then the status_code is "200"
     And a valid item is returned
     And values are changed
+    And make request to delete a item by id
 
   Scenario: Update item with put
     Given the test-bees url
@@ -48,6 +53,7 @@ Feature: Items
     Then the status_code is "200"
     And a valid item is returned
     And values are changed
+    And make request to delete a item by id
 
   Scenario: Delete item
     Given the test-bees url
