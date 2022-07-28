@@ -3,8 +3,8 @@ import json
 from behave import step
 import requests
 
+from helpers.tools import check_if_changed_values
 from modules.items import (
-    check_if_changed_values,
     is_valid_item,
     is_valid_items,
     make_a_invalid_item,
@@ -80,7 +80,7 @@ def update_item(context, mode):
     context.new_item = new_item
 
 
-@step('values are changed')
+@step('item values has changed')
 def check_changed_values(context):
     expected = context.new_item
     returned = context.response.json()

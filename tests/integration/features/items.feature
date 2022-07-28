@@ -39,7 +39,7 @@ Feature: Items
     And save the item id
     Then the status_code is "200"
     And a valid item is returned
-    And values are changed
+    And item values has changed
     And make request to delete a item by id
 
   Scenario: Update item with put
@@ -52,7 +52,7 @@ Feature: Items
     And make request to update a item values with "put"
     Then the status_code is "200"
     And a valid item is returned
-    And values are changed
+    And item values has changed
     And make request to delete a item by id
 
   Scenario: Delete item
