@@ -36,29 +36,25 @@ def is_valid_items(items: list[dict]) -> bool:
     return all(is_valid_item(item) for item in items)
 
 
-def make_a_valid_item() -> dict:
-    """Make a valid item
+def make_a_item(valid: bool=True) -> dict:
+    """Make a item
+
+    Args:
+        valid (bool): if is valid
 
     Returns:
         dict: valid item
     """
+    if valid:
+        return {
+            'name': make_random_str(20),
+            'height': make_randon_float(),
+            'width': make_randon_float(),
+            'weight': make_randon_float()
+        }
     return {
-        'name': make_random_str(20),
-        'height': make_randon_float(),
-        'width': make_randon_float(),
-        'weight': make_randon_float()
-    }
-
-
-def make_a_invalid_item() -> dict:
-    """Make a invalid item
-
-    Returns:
-        dict: invalid item
-    """
-    return {
-        'name': make_randon_float(),
-        'height': make_random_str(20),
-        'width': make_random_str(20),
-        'weight': make_random_str(20)
+        'xxxxxx': make_randon_float(),
+        'yyyyyy': make_random_str(20),
+        'zzzzzz': make_random_str(20),
+        'wwwwww': make_random_str(20)
     }

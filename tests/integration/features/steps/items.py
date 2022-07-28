@@ -7,9 +7,11 @@ from helpers.tools import check_if_changed_values
 from modules.items import (
     is_valid_item,
     is_valid_items,
-    make_a_invalid_item,
-    make_a_valid_item
+    make_a_item
 )
+
+
+INVALID_ID = 99999999999999999
 
 
 @step('make a request to get all items')
@@ -26,17 +28,16 @@ def check_items_list(context):
     )
 
 
-@step('a valid item')
-def make_item(context):
-    context.item = make_a_valid_item()
+@step('a "{value}" item')
+def make_item(context, value):
+    param = {
+        "valid": True,
+        "invalid": False
+    }
+    context.item = make_a_item(param[value])
 
 
-@step('a invalid item')
-def make_invalid_item(context):
-    context.item = make_a_invalid_item()
-
-
-@step('make a request to post a valid item')
+@step('make a request to post item')
 def post_item(context):
     url = context.root_url + 'items.json'
     headers = {'Content-Type': 'application/json'}
@@ -55,12 +56,19 @@ def check_item(context):
 
 @step('save the item id')
 def save_id(context):
-    context.item_id = context.response.json().get('id')
+    if response := getattr(context, 'response', None):
+        context.item_id = response.json().get('id')
+    else:
+        context.item_id = INVALID_ID
 
 
-@step('make a request to get item by id')
-def get_item_by_id(context):
-    url = f'{context.root_url}items/{context.item_id}.json'
+@step('make a request to get item by "{type_}" id')
+def get_item_by_id(context, type_):
+    ids = {
+        'valid': getattr(context, 'item_id', None),
+        'invalid': INVALID_ID
+    }
+    url = f'{context.root_url}items/{ids[type_]}.json'
     context.response = requests.get(url)
 
 
@@ -71,7 +79,7 @@ def update_item(context, mode):
         'put': requests.put
     }
     old_item_id = context.item_id
-    new_item = make_a_valid_item()
+    new_item = make_a_item()
     headers = {'Content-Type': 'application/json'}
     url = f'{context.root_url}items/{old_item_id}.json'
     context.response = modes[mode](
