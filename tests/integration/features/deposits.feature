@@ -36,7 +36,6 @@ Feature: Deposits
     And a valid deposit is returned
     When save the deposit id
     And make request to update a deposit values with "patch"
-    And save the deposit id
     Then the status_code is "200"
     And a valid deposit is returned
     And deposit values has changed

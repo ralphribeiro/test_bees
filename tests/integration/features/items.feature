@@ -36,7 +36,6 @@ Feature: Items
     And a valid item is returned
     When save the item id
     And make request to update a item values with "patch"
-    And save the item id
     Then the status_code is "200"
     And a valid item is returned
     And item values has changed
