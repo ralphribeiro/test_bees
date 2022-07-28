@@ -7,8 +7,11 @@ from helpers.tools import check_if_changed_values
 from modules.deposits import (
     is_valid_deposits,
     is_valid_deposit,
-    make_a_valid_deposit
+    make_a_deposit
 )
+
+
+INVALID_ID = 99999999999999999
 
 
 @step('make a request to get all deposits')
@@ -25,12 +28,16 @@ def check_deposits_list(context):
     )
 
 
-@step('a valid deposit')
-def make_deposit(context):
-    context.deposit = make_a_valid_deposit()
+@step('a "{value}" deposit')
+def make_deposit(context, value):
+    param = {
+        "valid": True,
+        "invalid": False
+    }
+    context.deposit = make_a_deposit(param[value])
 
 
-@step('make a request to post a valid deposit')
+@step('make a request to post deposit')
 def post_deposit(context):
     url = context.root_url + 'deposits.json'
     headers = {'Content-Type': 'application/json'}
@@ -39,9 +46,13 @@ def post_deposit(context):
     )
 
 
-@step('make a request to get deposit by id')
-def post_deposit_with_items(context):
-    url = f'{context.root_url}deposits/{context.deposit_id}.json'
+@step('make a request to get deposit by "{type_}" id')
+def post_deposit_with_items(context, type_):
+    ids = {
+        'valid': getattr(context, 'deposit_id', None),
+        'invalid': INVALID_ID
+    }
+    url = f'{context.root_url}deposits/{ids[type_]}.json'
     context.response = requests.get(url)
 
 
@@ -55,7 +66,10 @@ def check_deposit(context):
 
 @step('save the deposit id')
 def save_id(context):
-    context.deposit_id = context.response.json().get('id')
+    if response := getattr(context, 'response', None):
+        context.deposit_id = response.json().get('id')
+    else:
+        context.deposit_id = INVALID_ID
 
 
 @step('make request to update a deposit values with "{mode}"')
@@ -65,7 +79,7 @@ def update_deposit(context, mode):
         'put': requests.put
     }
     old_deposit_id = context.deposit_id
-    new_deposit = make_a_valid_deposit()
+    new_deposit = make_a_deposit()
     headers = {'Content-Type': 'application/json'}
     url = f'{context.root_url}deposits/{old_deposit_id}.json'
     context.response = modes[mode](
