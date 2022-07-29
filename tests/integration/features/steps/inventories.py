@@ -66,3 +66,21 @@ def post_deposit_with_items(context, type_):
     }
     url = f'{context.root_url}inventories/{ids[type_]}.json'
     context.response = requests.get(url)
+
+
+@step('make request to update a inventory values with "{mode}"')
+def update_inventory(context, mode):
+    modes = {
+        'patch': requests.patch,
+        'put': requests.put
+    }
+    inventory_id = context.inventory_id
+    deposit_id = context.deposit_id
+    item_new_id = context.item_new_id
+    to_modify_inventory = make_a_inventory(deposit_id, item_new_id)
+    headers = {'Content-Type': 'application/json'}
+    url = f'{context.root_url}inventories/{inventory_id}.json'
+    context.response = modes[mode](
+        url, headers=headers, data=json.dumps(to_modify_inventory)
+    )
+    context.new_inventory = to_modify_inventory

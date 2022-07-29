@@ -103,3 +103,10 @@ def delete_deposit(context):
     deposit_id = context.deposit_id
     url = f'{context.root_url}deposits/{deposit_id}.json'
     context.response = requests.delete(url)
+
+
+@step('the deposit has been update with items')
+def check_deposit_items(context):
+    assert context.inventory.get('item_id') == context.item_id, (
+        '\nDeposit with wrong item id'
+    )

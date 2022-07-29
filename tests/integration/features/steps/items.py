@@ -18,6 +18,7 @@ RESPONSE_FIELDS = (
     'url',
 )
 
+
 @step('a list of valid items is returned')
 def check_items_list(context):
     items = context.response.json()
@@ -90,7 +91,14 @@ def check_changed_values(context):
 
 
 @step('make request to delete a item by id')
-def delete_item(context):
+def delete_new_item(context):
     item_id = context.item_id
+    url = f'{context.root_url}items/{item_id}.json'
+    context.response = requests.delete(url)
+
+
+@step('make request to delete a new item by id')
+def delete_item(context):
+    item_id = context.item_new_id
     url = f'{context.root_url}items/{item_id}.json'
     context.response = requests.delete(url)

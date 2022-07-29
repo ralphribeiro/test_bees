@@ -27,6 +27,12 @@ def get_all(context, which):
     context.response = requests.get(url)
 
 
+@step('save the new "{which}" id')
+def save_new_id(context, which):
+    response = context.response
+    setattr(context, f'{which}_new_id', response.json().get('id'))
+
+
 @step('save the "{which}" id')
 def save_id(context, which):
     if response := getattr(context, 'response', None):
