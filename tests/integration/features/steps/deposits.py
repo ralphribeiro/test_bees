@@ -3,15 +3,22 @@ import json
 from behave import step
 import requests
 
-from helpers.tools import check_if_changed_values
-from modules.deposits import (
-    is_valid_deposits,
-    is_valid_deposit,
-    make_a_deposit
-)
+from helpers.tools import are_valids, check_if_changed_values, is_valid
+from modules.deposits import make_a_deposit
 
 
-INVALID_ID = 99999999999999999
+RESPONSE_FIELDS = [
+    'id',
+    'name',
+    'address',
+    'city',
+    'state',
+    'zipcode',
+    'created_at',
+    'updated_at',
+    'items',
+    'url'
+]
 
 
 @step('make a request to get all deposits')
@@ -23,7 +30,7 @@ def get_all_deposits(context):
 @step('a list of valid deposits is returned')
 def check_deposits_list(context):
     deposits = context.response.json()
-    assert is_valid_deposits(deposits), (
+    assert are_valids(deposits, RESPONSE_FIELDS), (
         '\nThere are invalid deposits in the returned list.'
     )
 
@@ -50,7 +57,7 @@ def post_deposit(context):
 def post_deposit_with_items(context, type_):
     ids = {
         'valid': getattr(context, 'deposit_id', None),
-        'invalid': INVALID_ID
+        'invalid': 9999999999999999
     }
     url = f'{context.root_url}deposits/{ids[type_]}.json'
     context.response = requests.get(url)
@@ -59,17 +66,9 @@ def post_deposit_with_items(context, type_):
 @step('a valid deposit is returned')
 def check_deposit(context):
     deposit = context.response.json()
-    assert is_valid_deposit(deposit), (
+    assert is_valid(deposit, RESPONSE_FIELDS), (
         '\nInvalid deposit.'
     )
-
-
-@step('save the deposit id')
-def save_id(context):
-    if response := getattr(context, 'response', None):
-        context.deposit_id = response.json().get('id')
-    else:
-        context.deposit_id = INVALID_ID
 
 
 @step('make request to update a deposit values with "{mode}"')
@@ -87,6 +86,7 @@ def update_deposit(context, mode):
     )
     context.new_deposit = new_deposit
 
+
 @step('deposit values has changed')
 def check_changed_values(context):
     expected = context.new_deposit
@@ -96,7 +96,6 @@ def check_changed_values(context):
         f'\nExpected: {expected}'
         f'\nReturned: {returned}'
     )
-
 
 
 @step('make request to delete a deposit by id')

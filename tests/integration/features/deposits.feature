@@ -3,7 +3,7 @@ Feature: Deposits
 
   Scenario: Get many deposits
     Given the test-bees url
-    When make a request to get all deposits
+    When make a request to get all "deposits"
     Then the status_code is "200"
     And a list of valid deposits is returned
 
@@ -13,7 +13,7 @@ Feature: Deposits
     When make a request to post deposit
     Then the status_code is "201"
     And a valid deposit is returned
-    And save the deposit id
+    And save the "deposit" id
     And make request to delete a deposit by id
 
   Scenario: Create invalid deposit
@@ -28,7 +28,7 @@ Feature: Deposits
     When make a request to post deposit
     Then the status_code is "201"
     And a valid deposit is returned
-    When save the deposit id
+    When save the "deposit" id
     And make a request to get deposit by "valid" id
     Then the status_code is "200"
     And a valid deposit is returned
@@ -45,7 +45,7 @@ Feature: Deposits
     When make a request to post deposit
     Then the status_code is "201"
     And a valid deposit is returned
-    When save the deposit id
+    When save the "deposit" id
     And make request to update a deposit values with "patch"
     Then the status_code is "200"
     And a valid deposit is returned
@@ -58,7 +58,7 @@ Feature: Deposits
     When make a request to post deposit
     Then the status_code is "201"
     And a valid deposit is returned
-    When save the deposit id
+    When save the "deposit" id
     And make request to update a deposit values with "put"
     Then the status_code is "200"
     And a valid deposit is returned
@@ -67,7 +67,7 @@ Feature: Deposits
 
   Scenario: Update deposit with invalid id
     Given the test-bees url
-    And save the deposit id
+    And save the "deposit" id
     When make request to update a deposit values with "put"
     Then the status_code is "404"
 
@@ -77,12 +77,12 @@ Feature: Deposits
     When make a request to post deposit
     Then the status_code is "201"
     And a valid deposit is returned
-    When save the deposit id
+    When save the "deposit" id
     And make request to delete a deposit by id
     Then the status_code is "204"
 
   Scenario: Delete deposit with invalid id
     Given the test-bees url
-    And save the deposit id
+    And save the "deposit" id
     When make request to delete a deposit by id
     Then the status_code is "404"

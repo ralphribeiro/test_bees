@@ -3,27 +3,25 @@ import json
 from behave import step
 import requests
 
-from helpers.tools import check_if_changed_values
-from modules.items import (
-    is_valid_item,
-    is_valid_items,
-    make_a_item
+from modules.items import make_a_item
+from helpers.tools import are_valids, check_if_changed_values, is_valid
+
+
+RESPONSE_FIELDS = (
+    'id',
+    'name',
+    'height',
+    'width',
+    'weight',
+    'created_at',
+    'updated_at',
+    'url',
 )
-
-
-INVALID_ID = 99999999999999999
-
-
-@step('make a request to get all items')
-def get_all_items(context):
-    url = context.root_url + 'items.json'
-    context.response = requests.get(url)
-
 
 @step('a list of valid items is returned')
 def check_items_list(context):
     items = context.response.json()
-    assert is_valid_items(items), (
+    assert are_valids(items, RESPONSE_FIELDS), (
         '\nThere are invalid items in the returned list.'
     )
 
@@ -49,24 +47,16 @@ def post_item(context):
 @step('a valid item is returned')
 def check_item(context):
     item = context.response.json()
-    assert is_valid_item(item), (
+    assert is_valid(item, RESPONSE_FIELDS), (
         '\nInvalid item.'
     )
-
-
-@step('save the item id')
-def save_id(context):
-    if response := getattr(context, 'response', None):
-        context.item_id = response.json().get('id')
-    else:
-        context.item_id = INVALID_ID
 
 
 @step('make a request to get item by "{type_}" id')
 def get_item_by_id(context, type_):
     ids = {
         'valid': getattr(context, 'item_id', None),
-        'invalid': INVALID_ID
+        'invalid': 9999999999999999
     }
     url = f'{context.root_url}items/{ids[type_]}.json'
     context.response = requests.get(url)

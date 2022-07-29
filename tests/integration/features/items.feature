@@ -3,7 +3,7 @@ Feature: Items
 
   Scenario: Get many items
     Given the test-bees url
-    When make a request to get all items
+    When make a request to get all "items"
     Then the status_code is "200"
     And a list of valid items is returned
 
@@ -11,7 +11,7 @@ Feature: Items
     Given the test-bees url
     And a "valid" item
     When make a request to post item
-    And save the item id
+    And save the "item" id
     Then the status_code is "201"
     And a valid item is returned
     And make request to delete a item by id
@@ -28,7 +28,7 @@ Feature: Items
     When make a request to post item
     Then the status_code is "201"
     And a valid item is returned
-    When save the item id
+    When save the "item" id
     And make a request to get item by "valid" id
     Then the status_code is "200"
     And a valid item is returned
@@ -45,7 +45,7 @@ Feature: Items
     When make a request to post item
     Then the status_code is "201"
     And a valid item is returned
-    When save the item id
+    When save the "item" id
     And make request to update a item values with "patch"
     Then the status_code is "200"
     And a valid item is returned
@@ -58,7 +58,7 @@ Feature: Items
     When make a request to post item
     Then the status_code is "201"
     And a valid item is returned
-    When save the item id
+    When save the "item" id
     And make request to update a item values with "put"
     Then the status_code is "200"
     And a valid item is returned
@@ -67,7 +67,7 @@ Feature: Items
 
   Scenario: Update item with invalid id
     Given the test-bees url
-    And save the item id
+    And save the "item" id
     When make request to update a item values with "put"
     Then the status_code is "404"
 
@@ -77,12 +77,12 @@ Feature: Items
     When make a request to post item
     Then the status_code is "201"
     And a valid item is returned
-    When save the item id
+    When save the "item" id
     And make request to delete a item by id
     Then the status_code is "204"
 
   Scenario: Delete item with invalid id
     Given the test-bees url
-    And save the item id
+    And save the "item" id
     When make request to delete a item by id
     Then the status_code is "404"

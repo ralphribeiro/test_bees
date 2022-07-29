@@ -1,4 +1,8 @@
 from behave import step
+import requests
+
+
+INVALID_ID = 99999999999999999
 
 
 @step('the test-bees url')
@@ -15,3 +19,17 @@ def chech_status_code(context, status):
         f'\nExpected: {status}'
         f'\nReturned: {status_code}'
     )
+
+
+@step('make a request to get all "{which}"')
+def get_all(context, which):
+    url = f'{context.root_url}{which}.json'
+    context.response = requests.get(url)
+
+
+@step('save the "{which}" id')
+def save_id(context, which):
+    if response := getattr(context, 'response', None):
+        setattr(context, f'{which}_id', response.json().get('id'))
+    else:
+        setattr(context, f'{which}_id', INVALID_ID)
