@@ -1,10 +1,11 @@
-from page_objects import PageObject, PageElement
+from page_objects import PageObject
 
+from .page_element import PageElementPolling as PageElement
 
 class LoginPage(PageObject):
     input_email = PageElement(id_='user_email')
     input_password = PageElement(id_='user_password')
-    btn_submit = PageElement(css='.btn')
+    btn_submit = PageElement(name='commit')
 
     def fill_email(self, email: str) -> None:
         """Fill email on field email

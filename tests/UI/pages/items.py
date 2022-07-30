@@ -1,12 +1,28 @@
-from page_objects import PageObject, PageElement
+from page_objects import PageObject
+
+from .page_element import PageElementPolling as PageElement
+from .page_element import MultiPageElementPolling as MultiPageElement
 
 
 class ItemsPage(PageObject):
     btn_new = PageElement(link_text='New item')
+    success_destroyed_message = PageElement(
+        xpath="//p[contains(.,'Item was successfully destroyed.')]")
+    table = MultiPageElement(
+        tag_name="tr")
+        # xpath="//div[@id='items']/table/tbody/tr")
 
     def click_new(self) -> None:
         """ Click on new item button. """
         self.btn_new.click()
+
+    def get_success_destroyed_message(self) -> str:
+        """ Get successfully destroyed message. """
+        return self.success_destroyed_message.text
+
+    def get_len_table(self) -> int:
+        """ Get len of items table. """
+        return len(self.table)
 
 
 class ItemsPageCreate(PageObject):
@@ -43,6 +59,8 @@ class ItemPage(PageObject):
     height = PageElement(css='p:nth-child(2)')
     width = PageElement(css='p:nth-child(3)')
     weight = PageElement(css='p:nth-child(4)')
+    btn_destroy = PageElement(css='.button_to:nth-child(3) > button')
+    link_edit = PageElement(link_text='Edit this item')
 
     def get_success_message(self) -> str:
         """ Get message successfully created. """
@@ -63,3 +81,11 @@ class ItemPage(PageObject):
     def get_weight(self) -> str:
         """ Get weight text. """
         return self.weight.text
+
+    def delete(self) -> None:
+        """ Click on destroy button. """
+        self.btn_destroy.click()
+
+    def edit(self) -> None:
+        """ Click on edit this item. """
+        self.link_edit.click()

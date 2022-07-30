@@ -6,5 +6,7 @@ def before_all(context):
     context.driver = webdriver.Firefox(keep_alive=False)
 
 
-def after_scenario(context, scenario):
+def after_all(context):
+    context.driver.delete_all_cookies()
     context.driver.quit()
+    

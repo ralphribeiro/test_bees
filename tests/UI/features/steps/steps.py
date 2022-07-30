@@ -1,8 +1,11 @@
+from time import sleep
+
 from behave import step
 
 from helpers.models import get_fake
 from pages import get_page_object
 from pages.login import LoginPage
+from pages.home import HomePage
 
 
 @step('has authenticated')
@@ -18,14 +21,22 @@ def login(context):
     login_page.fill_password(password)
     login_page.submit()
 
-    assert context.driver.current_url != url, (
+    home_page = HomePage(context.driver)
+    message = home_page.get_success_login_message()
+
+    assert message == 'Signed in successfully.', (
         '\nCould not login.'
     )
 
 
+@step('logout')
+def logout(context):
+    page = HomePage(context.driver)
+    page.logout()
+
+
 @step('that it is on the "{which}" page')
 def go_to_which_page(context, which):
-    login(context)
     endpoint = f'{context.root_url}/{which}'
     context.driver.get(endpoint)
     assert context.driver.current_url == endpoint, (
@@ -36,6 +47,9 @@ def go_to_which_page(context, which):
 @step('navigate to "{which}" create page')
 def go_to_create(context, which):
     page = get_page_object(which, 'all', context.driver)
+    context.driver.execute_script(
+        "window.scrollTo(0, document.body.scrollHeight);")
+    sleep(1)
     page.click_new()
 
 
@@ -68,6 +82,31 @@ def created(context, which):
     check_created(context, which)
 
 
-@step('delete the created "{which}"')
-def defete(context, which):
-    ...
+@step('destroy the created "{which}"')
+def delete(context, which):
+    page = get_page_object(which, 'detail', context.driver)
+    page.delete()
+
+
+@step('"{which}" has destroyed')
+def check_destroyed(context, which):
+    page = get_page_object(which, 'all', context.driver)
+    message = page.get_success_destroyed_message()
+    expected = f'{which.capitalize()} was successfully destroyed.'
+    assert message == expected, '\nThe item was not destroyed.'
+
+
+@step('"{which}" has updated')
+def check_updated(context, which):
+    page = get_page_object(which, 'detail', context.driver)
+    message = page.get_success_message()
+    expected = f'{which.capitalize()} was successfully updated.'
+    assert message == expected, '\nThe item was not updated.'
+
+
+@step('update "{which}"')
+def update(context, which):
+    page = get_page_object(which, 'detail', context.driver)
+    page.edit()
+    submit_create(context, which)
+    check_updated(context, which)
