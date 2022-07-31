@@ -6,18 +6,19 @@ Given that you have the _python_ installed.
 
 Have the geckodriver installed because UI tests will are run on Firefox.
 
-```bash
+
+```console
 git clone git@github.com:ralphribeiro/test_bees.git
 cd test_bees
 ```
 
-```bash
+```console
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 ```
 or with poetry
 
-```bash
+```console
 poetry install && poetry shell
 ```
 
