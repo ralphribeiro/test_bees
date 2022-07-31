@@ -12,6 +12,8 @@ git clone git@github.com:ralphribeiro/test_bees.git
 cd test_bees
 ```
 
+---
+
 ```console
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
@@ -21,6 +23,8 @@ or with poetry
 ```console
 poetry install && poetry shell
 ```
+
+---
 
 > To run tests
 
