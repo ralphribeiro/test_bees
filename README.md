@@ -4,9 +4,6 @@
 
 Given that you have the _python_ installed.
 
-Have the geckodriver installed because UI tests will are run on Firefox.
-
-
 ```console
 git clone git@github.com:ralphribeiro/test_bees.git
 cd test_bees
