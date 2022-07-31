@@ -28,7 +28,7 @@ poetry install && poetry shell
 _From the project root directory_
 
 - Integration: `tox -e integration`
-- UI: `tox -e UI`
+- UI: `tox -e UI` (run on geckodriver/Firefox)
 - To run all teste: `tox`
 
 
