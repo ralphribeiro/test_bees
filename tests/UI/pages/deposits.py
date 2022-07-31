@@ -27,10 +27,10 @@ class DepositsPage(PageObject):
 
 class DepositsPageCreate(PageObject):
     field_name = PageElement(id_='deposit_name')
-    field_address = PageElement(id_="deposit_address")
-    field_city = PageElement(id_="deposit_city")
-    field_state = PageElement(id_="deposit_state")
-    field_zipcode = PageElement(id_="deposit_zipcode")
+    field_address = PageElement(id_='deposit_address')
+    field_city = PageElement(id_='deposit_city')
+    field_state = PageElement(id_='deposit_state')
+    field_zipcode = PageElement(id_='deposit_zipcode')
     btn_submit = PageElement(name='commit')
 
     def fill_name(self, text: str) -> None:

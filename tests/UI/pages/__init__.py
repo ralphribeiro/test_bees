@@ -8,8 +8,8 @@ def get_page_object(which: str, page: str, driver):
     """PageObjects factory
 
     Args:
-        which (str): which
-        page (str): which page
+        which (str): which (choices: item, deposit, inventory)
+        page (str): which page (choices: create, detail, all)
         driver (Selenium.webdriver): webdriver
 
     Returns:

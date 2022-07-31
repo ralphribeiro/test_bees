@@ -2,8 +2,8 @@ from time import sleep
 
 from behave import step
 
-from helpers.models import get_fake
 from pages import get_page_object
+from pages.models import get_fake
 
 
 @step('that it is on the "{which}" page')

@@ -1,7 +1,7 @@
 from behave import step
 
-from helpers.models import get_fake
 from pages import get_page_object
+from pages.models import get_fake
 
 from steps import go_to_which_page, created, get_page_object
 
