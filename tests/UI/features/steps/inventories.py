@@ -1,3 +1,5 @@
+from time import sleep
+
 from behave import step
 
 from models.models import get_fake
@@ -27,6 +29,9 @@ def submit_inventory(context):
 @step('create one inventory')
 def create_inventory(context):
     page = get_page_object('inventory', 'all', context.driver)
+    context.driver.execute_script(
+        "window.scrollTo(0, document.body.scrollHeight);")
+    sleep(1)
     page.click_new()
     submit_inventory(context)
 
