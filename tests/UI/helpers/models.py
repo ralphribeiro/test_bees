@@ -1,28 +1,4 @@
-from random import choice, randint
-from string import ascii_letters
-
-
-
-def make_random_str(length: int) -> str:
-    """Make a random string
-
-    Args:
-        length (int): string length
-
-    Returns:
-        str: random string
-    """
-    return ''.join(choice(ascii_letters) for _ in range(length))
-
-
-def make_randon_float() -> float:
-    """Make a random float
-
-    Returns:
-        float: random float
-    """
-    str_float = f'{randint(1, 1000)}.{randint(0, 99)}'
-    return float(str_float)
+from faker import Faker
 
 
 def get_fake(which: str) -> dict:
@@ -33,13 +9,21 @@ def get_fake(which: str) -> dict:
 
     Returns:
         dict: fakes
-    """    
+    """
+    faker = Faker()
     fakes = {
         'item': {
-            'name': make_random_str(20),
-            'height': make_randon_float(),
-            'width': make_randon_float(),
-            'weight': make_randon_float()
+            'name': faker.word(),
+            'height': faker.numerify('!!!%,%%'),
+            'width': faker.numerify('!!!%,%%'),
+            'weight': faker.numerify('!!!%,%%')
+        },
+        'deposit': {
+            'name': faker.name(),
+            'address': faker.street_name(),
+            'city': faker.city(),
+            'state': faker.state(),
+            'zipcode': faker.zipcode()
         }
     }
     return fakes[which]
