@@ -2,6 +2,7 @@ requests
 behave
 ipdb
 selenium
+webdriver-manager
 page-objects
 Faker
 tox

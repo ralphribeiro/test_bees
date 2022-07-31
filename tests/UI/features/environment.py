@@ -1,9 +1,12 @@
 from selenium import webdriver
+from webdriver_manager.firefox import GeckoDriverManager
 
 
 def before_all(context):
     context.root_url = 'https://test-bees.herokuapp.com'
-    context.driver = webdriver.Firefox(keep_alive=False)
+    driver_manager = GeckoDriverManager()
+    context.driver = webdriver.Firefox(
+        executable_path=driver_manager.install())
     context.driver.maximize_window()
 
 
