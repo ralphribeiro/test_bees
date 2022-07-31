@@ -24,7 +24,6 @@ class ItemsPage(PageObject):
         """ Get len of items table. """
         return len(self.table)
 
-from time import sleep
 class ItemsPageCreate(PageObject):
     field_name = PageElement(id_='item_name')
     field_height = PageElement(id_="item_height")
@@ -36,31 +35,25 @@ class ItemsPageCreate(PageObject):
         """ Fill name on field name. """
         self.field_name.clear()
         self.field_name = text
-        sleep(1)
 
     def fill_height(self, text: str) -> None:
         """ Fill height on field height. """
         self.field_height.clear()
         self.field_height = text
-        sleep(1)
 
     def fill_width(self, text: str) -> None:
         """ Fill width on field width. """
         self.field_width.clear()
         self.field_width = text
-        sleep(1)
 
     def fill_weight(self, text: str) -> None:
         """ Fill weight on field weight. """
         self.field_weight.clear()
         self.field_weight = text
-        sleep(1)
 
     def submit(self) -> None:
         """ Click on create item """
         self.btn_submit.click()
-        sleep(1)
-
 
 class ItemPage(PageObject):
     successfully_msg = PageElement(css='.container > p')
