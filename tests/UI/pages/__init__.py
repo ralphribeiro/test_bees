@@ -2,7 +2,7 @@ from functools import partial
 
 from .items import ItemPage, ItemsPage, ItemsPageCreate
 from .deposits import DepositPage, DepositsPage, DepositsPageCreate
-
+from .inventories import InventoryPage, InventoriesPage, InventoriesPageCreate
 
 def get_page_object(which: str, page: str, driver):
     """PageObjects factory
@@ -27,6 +27,9 @@ def get_page_object(which: str, page: str, driver):
             'all': partial(DepositsPage, driver)
         },
         'inventory': {
+            'create': partial(InventoriesPageCreate, driver),
+            'detail': partial(InventoryPage, driver),
+            'all': partial(InventoriesPage, driver)
 
         }
     }

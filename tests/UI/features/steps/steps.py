@@ -4,35 +4,6 @@ from behave import step
 
 from helpers.models import get_fake
 from pages import get_page_object
-from pages.login import LoginPage
-from pages.home import HomePage
-
-
-@step('has authenticated')
-def login(context):
-    url = 'https://test-bees.herokuapp.com/users/sign_in'
-    context.driver.get(url)
-
-    email = 'abc123@123.com'
-    password = '123456'
-
-    login_page = LoginPage(context.driver)
-    login_page.fill_email(email)
-    login_page.fill_password(password)
-    login_page.submit()
-
-    home_page = HomePage(context.driver)
-    message = home_page.get_success_login_message()
-
-    assert message == 'Signed in successfully.', (
-        '\nCould not login.'
-    )
-
-
-@step('logout')
-def logout(context):
-    page = HomePage(context.driver)
-    page.logout()
 
 
 @step('that it is on the "{which}" page')
@@ -62,10 +33,23 @@ def submit_create(context, which):
     page.submit()
 
 
+@step('save "{which}" name')
+def save_name(context,  which):
+    page = get_page_object(which, 'detail', context.driver)
+    try:
+        name = page.get_name()
+    except AttributeError:
+        ...
+    else:
+        name = name.split(': ')[1]
+        setattr(context, f'{which}_name', name)
+
+
 @step('create one "{which}"')
 def create_one(context, which):
     go_to_create(context, which)
     submit_create(context, which)
+    save_name(context, which)
 
 
 @step('"{which}" has created')

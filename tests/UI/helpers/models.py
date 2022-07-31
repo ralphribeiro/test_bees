@@ -24,6 +24,11 @@ def get_fake(which: str) -> dict:
             'city': faker.city(),
             'state': faker.state(),
             'zipcode': faker.zipcode()
+        },
+        'inventory': {
+            'item_name': '',
+            'deposit_name': '',
+            'item_count': str(faker.random_int(1, 1000))
         }
     }
     return fakes[which]

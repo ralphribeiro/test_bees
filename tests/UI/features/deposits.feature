@@ -1,4 +1,4 @@
-Feature: Items
+Feature: Deposits
 
   Context: has authenticated
 
