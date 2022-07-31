@@ -1,0 +1,7 @@
+requests
+behave
+ipdb
+selenium
+page-objects
+Faker
+tox
