@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "test_bees"
+name = "tests"
 version = "0.1.0"
 description = ""
 authors = ["Ralph Ribeiro <ralph_ribeiro@msn.com>"]
@@ -12,6 +12,7 @@ ipdb = "^0.13.9"
 selenium = "^4.3.0"
 page-objects = "^1.1.0"
 Faker = "^13.15.1"
+tox = "^3.25.1"
 
 [tool.poetry.dev-dependencies]
 mypy = "^0.971"
