@@ -6,12 +6,13 @@ from models.models import get_fake
 from pages import get_page_object
 
 
+@step('go to the "{which}" page')
 @step('that it is on the "{which}" page')
 def go_to_which_page(context, which):
     endpoint = f'{context.root_url}/{which}'
     context.driver.get(endpoint)
     assert context.driver.current_url == endpoint, (
-        '\nCould not go to items page.'
+        f'\nCould not go to {which} page.'
     )
 
 

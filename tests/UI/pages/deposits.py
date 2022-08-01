@@ -100,7 +100,8 @@ class DepositPage(PageObject):
 
     def get_items(self) -> str:
         """ Get items text. """
-        return self.items.text
+        item = self.items.text
+        return item.split(': ')[-1]
 
     def delete(self) -> None:
         """ Click on destroy button. """
