@@ -1,7 +1,7 @@
 from page_objects import PageObject
 
-from .page_element import PageElementPolling as PageElement
 from .page_element import MultiPageElementPolling as MultiPageElement
+from .page_element import PageElementPolling as PageElement
 
 
 class ItemsPage(PageObject):

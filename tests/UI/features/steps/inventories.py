@@ -4,7 +4,7 @@ from behave import step
 
 from models.models import get_fake
 from pages import get_page_object
-from steps import go_to_which_page, created, get_page_object
+from steps import created, get_page_object, go_to_which_page
 
 
 @step('that an item and a deposit were created')

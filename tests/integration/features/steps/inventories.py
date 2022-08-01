@@ -3,7 +3,7 @@ import json
 from behave import step
 import requests
 
-from helpers.tools import are_valids, check_if_changed_values, is_valid
+from helpers.tools import are_valids, is_valid
 from modules.inventories import make_a_inventory
 
 

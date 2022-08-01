@@ -1,7 +1,7 @@
 from behave import step
 
-from pages.login import LoginPage
 from pages.home import HomePage
+from pages.login import LoginPage
 
 
 @step('has authenticated')

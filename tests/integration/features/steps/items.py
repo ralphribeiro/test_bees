@@ -3,8 +3,8 @@ import json
 from behave import step
 import requests
 
-from modules.items import make_a_item
 from helpers.tools import are_valids, check_if_changed_values, is_valid
+from modules.items import make_a_item
 
 
 RESPONSE_FIELDS = (
