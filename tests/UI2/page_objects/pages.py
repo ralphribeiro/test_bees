@@ -30,8 +30,3 @@ class HomePage:
         self.page = page
         self.successfully = page.locator('text=Signed in successfully.')
 
-    def login_successfuly(self):
-        return self.successfully.count()
-
-    
-    
